@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #f8f9fa;
 }
 
 #root {
@@ -10,7 +11,6 @@ body {
   flex-direction: column;
 }
 
-.home-page,
 .add-book-page,
 .login-page {
   flex: 1;
@@ -20,16 +20,15 @@ body {
   width: 100%;
 }
 
-.home-page h1,
 .add-book-page h1,
 .login-page h1 {
-  color: #333;
+  color: #2d3436;
   margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
-.home-page p,
 .add-book-page p,
 .login-page p {
-  color: #666;
+  color: #636e72;
   font-size: 1.1rem;
 }
