@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page,
+.add-book-page,
+.login-page {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.home-page h1,
+.add-book-page h1,
+.login-page h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.home-page p,
+.add-book-page p,
+.login-page p {
+  color: #666;
+  font-size: 1.1rem;
+}
