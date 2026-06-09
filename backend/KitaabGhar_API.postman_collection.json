@@ -1,0 +1,364 @@
+{
+  "info": {
+    "_postman_id": "kitaabghar-api",
+    "name": "KitaabGhar API",
+    "description": "API documentation for KitaabGhar - Online Book Store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books?page=1&limit=10&category=Fiction&search=Harry",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "category",
+                  "value": "Fiction"
+                },
+                {
+                  "key": "search",
+                  "value": "Harry"
+                }
+              ]
+            },
+            "description": "Fetch all books with pagination and filters"
+          }
+        },
+        {
+          "name": "Get Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/65123abc456def789ghi0123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "65123abc456def789ghi0123"]
+            },
+            "description": "Get a specific book by ID"
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/categories",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "categories"]
+            },
+            "description": "Get all available book categories"
+          }
+        },
+        {
+          "name": "Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\",\n  \"description\": \"A classic American novel\",\n  \"price\": 299.99,\n  \"originalPrice\": 499.99,\n  \"stock\": 50,\n  \"category\": \"Fiction\",\n  \"isbn\": \"978-0-7432-7356-5\",\n  \"publisher\": \"Scribner\",\n  \"pages\": 180,\n  \"language\": \"English\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books"]
+            },
+            "description": "Create a new book"
+          }
+        },
+        {
+          "name": "Update Book",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 349.99,\n  \"stock\": 45\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books/65123abc456def789ghi0123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "65123abc456def789ghi0123"]
+            },
+            "description": "Update a book"
+          }
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/65123abc456def789ghi0123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "65123abc456def789ghi0123"]
+            },
+            "description": "Delete a book"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "users", "register"]
+            },
+            "description": "Register a new user"
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "users", "login"]
+            },
+            "description": "Login user"
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users/profile/65123abc456def789ghi0123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "users", "profile", "65123abc456def789ghi0123"]
+            },
+            "description": "Get user profile"
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"65123abc456def789ghi0123\",\n  \"name\": \"John Doe Updated\",\n  \"phone\": \"+91-9876543210\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"pincode\": \"10001\",\n    \"country\": \"USA\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/users/profile/65123abc456def789ghi0123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "users", "profile", "65123abc456def789ghi0123"]
+            },
+            "description": "Update user profile"
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "users"]
+            },
+            "description": "Get all users (admin only)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/cart",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart"]
+            },
+            "description": "Get user cart"
+          }
+        },
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"65123abc456def789ghi0123\",\n  \"bookId\": \"65123abc456def789ghi0456\",\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/cart/add",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart", "add"]
+            },
+            "description": "Add item to cart"
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"65123abc456def789ghi0123\",\n  \"bookId\": \"65123abc456def789ghi0456\",\n  \"quantity\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/cart/update",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart", "update"]
+            },
+            "description": "Update quantity of item in cart"
+          }
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"65123abc456def789ghi0123\",\n  \"bookId\": \"65123abc456def789ghi0456\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/cart/remove",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart", "remove"]
+            },
+            "description": "Remove item from cart"
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"65123abc456def789ghi0123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/cart/clear",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "cart", "clear"]
+            },
+            "description": "Clear entire cart"
+          }
+        }
+      ]
+    }
+  ]
+}

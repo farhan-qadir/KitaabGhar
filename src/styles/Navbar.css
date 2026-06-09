@@ -129,6 +129,60 @@
   transform: translateY(-2px);
 }
 
+/* Cart Badge */
+.cart-item {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* User Section */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 8px 15px;
+  background: rgba(102, 126, 234, 0.2);
+  border-radius: 20px;
+}
+
+.user-name {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  background: #ff5252;
+  transform: translateY(-2px);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar-container {
@@ -159,5 +213,13 @@
   .nav-icon {
     height: 24px;
     width: 24px;
+  }
+
+  .user-section {
+    gap: 10px;
+  }
+
+  .user-name {
+    font-size: 12px;
   }
 }

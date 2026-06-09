@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import '../styles/BookCard.css';
 
-export default function BookCard({ 
-  image, 
-  title, 
-  author, 
-  originalPrice, 
+export default function BookCard({
+  id,
+  image,
+  title,
+  author,
+  originalPrice,
   onAddToCart,
-  onAddToWishlist 
+  onAddToWishlist
 }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -18,7 +19,6 @@ export default function BookCard({
     }
   };
 
-  // Get first and last character of title
   const titleInitials = title ? `${title.charAt(0)}${title.charAt(title.length - 1)}` : '';
 
   return (
@@ -28,7 +28,7 @@ export default function BookCard({
         <div className="title-initials">{titleInitials}</div>
 
         {/* Wishlist Button */}
-        <button 
+        <button
           className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
           onClick={handleWishlist}
           title="Add to Wishlist"
@@ -50,7 +50,7 @@ export default function BookCard({
         </div>
 
         {/* Add to Cart Button */}
-        <button 
+        <button
           className="add-to-cart-btn"
           onClick={onAddToCart}
         >
