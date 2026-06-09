@@ -190,9 +190,18 @@ export const getBookById = async (req, res, next) => {
 export const createBook = async (req, res, next) => {
   try {
     if (!isMongoConnected()) {
-      return res.status(503).json({
-        success: false,
-        message: 'Database not connected. Please set up MongoDB and try again.'
+      const newBook = {
+        _id: "demo_" + Date.now(),
+        ...req.body,
+        createdAt: new Date().toISOString()
+      };
+      // Add to the top of our in-memory list
+      demoBooks.unshift(newBook);
+      
+      return res.status(201).json({
+        success: true,
+        message: 'Book created successfully (DEMO MODE)',
+        data: newBook
       });
     }
 
