@@ -58,6 +58,10 @@ const bookSchema = new mongoose.Schema(
       type: String,
       default: 'English'
     },
+    sellerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
     isActive: {
       type: Boolean,
       default: true

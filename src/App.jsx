@@ -8,6 +8,8 @@ import AddBook from './pages/AddBook';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
+import BookDetail from './pages/BookDetail';
+import EditBook from './pages/EditBook';
 import { PrivateRoute } from './components/PrivateRoute';
 import Footer from './components/Footer';
 import { Toaster } from 'react-hot-toast';
@@ -26,11 +28,20 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/books/:id" element={<BookDetail />} />
                 <Route
                   path="/add-book"
                   element={
                     <PrivateRoute>
                       <AddBook />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/edit-book/:id"
+                  element={
+                    <PrivateRoute>
+                      <EditBook />
                     </PrivateRoute>
                   }
                 />

@@ -221,14 +221,31 @@ export const createBook = async (req, res, next) => {
 // Update book
 export const updateBook = async (req, res, next) => {
   try {
+    const { id } = req.params;
+
     if (!isMongoConnected()) {
-      return res.status(503).json({
-        success: false,
-        message: 'Database not connected'
+      const index = demoBooks.findIndex(b => b._id === id);
+      if (index === -1) {
+        return res.status(404).json({
+          success: false,
+          message: 'Book not found'
+        });
+      }
+      
+      const updatedBook = {
+        ...demoBooks[index],
+        ...req.body,
+        updatedAt: new Date().toISOString()
+      };
+      
+      demoBooks[index] = updatedBook;
+      
+      return res.status(200).json({
+        success: true,
+        message: 'Book updated successfully (DEMO MODE)',
+        data: updatedBook
       });
     }
-
-    const { id } = req.params;
 
     const book = await Book.findByIdAndUpdate(id, req.body, {
       new: true,
@@ -255,14 +272,23 @@ export const updateBook = async (req, res, next) => {
 // Delete book
 export const deleteBook = async (req, res, next) => {
   try {
+    const { id } = req.params;
+
     if (!isMongoConnected()) {
-      return res.status(503).json({
-        success: false,
-        message: 'Database not connected'
+      const index = demoBooks.findIndex(b => b._id === id);
+      if (index === -1) {
+        return res.status(404).json({
+          success: false,
+          message: 'Book not found'
+        });
+      }
+      const deletedBook = demoBooks.splice(index, 1)[0];
+      return res.status(200).json({
+        success: true,
+        message: 'Book deleted successfully (DEMO MODE)',
+        data: deletedBook
       });
     }
-
-    const { id } = req.params;
 
     const book = await Book.findByIdAndDelete(id);
 

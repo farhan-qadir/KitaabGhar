@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function BookCard({
   id,
@@ -11,21 +12,29 @@ export default function BookCard({
   onAddToCart,
   onAddToWishlist
 }) {
+  const navigate = useNavigate();
   const [localWishlisted, setLocalWishlisted] = useState(isWishlisted);
 
-  // keep in sync when prop changes (e.g. navigating back)
   useEffect(() => { setLocalWishlisted(isWishlisted); }, [isWishlisted]);
 
-  const handleWishlist = () => {
+  const handleWishlist = (e) => {
+    e.stopPropagation(); // prevent card click
     setLocalWishlisted(prev => !prev);
     if (onAddToWishlist) onAddToWishlist();
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // prevent card click
+    if (onAddToCart) onAddToCart();
   };
 
   const titleInitials = title ? `${title.charAt(0)}${title.charAt(title.length - 1)}` : '??';
 
   return (
-    <div className="group bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-      
+    <div
+      onClick={() => navigate(`/books/${id}`)}
+      className="group bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-xl transition-all duration-300 cursor-pointer"
+    >
       {/* Image Container */}
       <div className="relative h-56 bg-slate-100 flex items-center justify-center overflow-hidden">
         {image ? (
@@ -35,12 +44,12 @@ export default function BookCard({
             <span className="text-5xl font-bold text-primary-300 uppercase tracking-widest">{titleInitials}</span>
           </div>
         )}
-        
+
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <button className="bg-white text-slate-900 px-6 py-2 rounded-full font-medium text-sm hover:bg-primary-50 hover:text-primary-700 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300">
+          <span className="bg-white text-slate-900 px-6 py-2 rounded-full font-medium text-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
             View Details
-          </button>
+          </span>
         </div>
 
         {/* Wishlist Button */}
@@ -54,30 +63,16 @@ export default function BookCard({
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-center gap-1 mb-2">
-          <div className="flex text-amber-400">
-            <Star className="w-3 h-3 fill-current" />
-            <Star className="w-3 h-3 fill-current" />
-            <Star className="w-3 h-3 fill-current" />
-            <Star className="w-3 h-3 fill-current" />
-            <Star className="w-3 h-3 fill-current text-slate-300" />
-          </div>
-          <span className="text-xs text-slate-500 font-medium">(4.0)</span>
-        </div>
-        
-        <h3 className="font-semibold text-slate-900 text-lg leading-tight mb-1 line-clamp-1 group-hover:text-primary-600 transition-colors" title={title}>
+        <h3 className="font-semibold text-slate-900 text-base leading-tight mb-1 line-clamp-2 group-hover:text-primary-600 transition-colors" title={title}>
           {title}
         </h3>
         <p className="text-sm text-slate-500 mb-4 line-clamp-1">{author}</p>
-        
+
         <div className="mt-auto flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">Price</span>
-            <span className="text-lg font-bold text-slate-900">Rs {originalPrice?.toFixed(2) || '0.00'}</span>
-          </div>
-          
+          <span className="text-lg font-bold text-slate-900">Rs {originalPrice?.toFixed(2) || '0.00'}</span>
+
           <button
-            onClick={onAddToCart}
+            onClick={handleAddToCart}
             className="flex items-center justify-center h-10 w-10 rounded-full bg-slate-100 text-slate-700 hover:bg-primary-600 hover:text-white transition-colors"
             title="Add to Cart"
           >

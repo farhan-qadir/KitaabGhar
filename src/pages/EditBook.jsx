@@ -1,69 +1,116 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { bookAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import { BookPlus, Tag, User as UserIcon, AlignLeft, IndianRupee, Hash, Library } from 'lucide-react';
+import { Edit, Tag, User as UserIcon, AlignLeft, IndianRupee, Hash, Library, ArrowLeft } from 'lucide-react';
 
-export default function AddBook() {
-  const [formData, setFormData] = useState(() => {
-    const saved = localStorage.getItem('addBookForm');
-    if (saved) return JSON.parse(saved);
-    return {
-      title: '', author: '', description: '', price: '', originalPrice: '',
-      stock: '', category: 'Fiction', isbn: '', publisher: '', pages: ''
-    };
-  });
-  const [loading, setLoading] = useState(false);
+export default function EditBook() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  
+  const [formData, setFormData] = useState({
+    title: '', author: '', description: '', price: '', originalPrice: '',
+    stock: '', category: 'Fiction', isbn: '', publisher: '', pages: ''
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   const categories = ['Fiction', 'Non-Fiction', 'Mystery', 'Romance', 'Science', 'History', 'Biography', 'Self-Help'];
 
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const res = await bookAPI.getById(id);
+        const book = res.data;
+        
+        // Security check
+        if (book.sellerId && book.sellerId !== user?._id && book.sellerId !== user?.id) {
+          toast.error("You don't have permission to edit this book");
+          navigate('/');
+          return;
+        }
+
+        setFormData({
+          title: book.title || '',
+          author: book.author || '',
+          description: book.description || '',
+          price: book.price || '',
+          originalPrice: book.originalPrice || '',
+          stock: book.stock || '',
+          category: book.category || 'Fiction',
+          isbn: book.isbn || '',
+          publisher: book.publisher || '',
+          pages: book.pages || ''
+        });
+      } catch (err) {
+        toast.error('Failed to load book data');
+        navigate('/');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBook();
+  }, [id, navigate, user]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => {
-      const updated = { ...prev, [name]: value };
-      localStorage.setItem('addBookForm', JSON.stringify(updated));
-      return updated;
-    });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
 
     try {
       const bookData = {
         ...formData,
-        sellerId: user?._id || user?.id,
         price: parseFloat(formData.price),
         originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : parseFloat(formData.price),
         stock: parseInt(formData.stock),
         pages: formData.pages ? parseInt(formData.pages) : null
       };
 
-      await bookAPI.create(bookData);
-      localStorage.removeItem('addBookForm');
-      toast.success('Book successfully listed for sale!');
-      navigate('/');
+      await bookAPI.update(id, bookData);
+      toast.success('Book successfully updated!');
+      navigate(`/books/${id}`);
     } catch (err) {
-      toast.error(err.message || 'Failed to add book');
+      toast.error(err.message || 'Failed to update book');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <Edit className="w-12 h-12 text-slate-300 mb-4" />
+          <div className="text-slate-500 font-medium">Loading listing details...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-slate-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
       <div className="w-full max-w-3xl">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-2 text-slate-600 hover:text-primary-600 font-medium transition-colors mb-6"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Book
+        </button>
+
         <div className="text-center mb-10">
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center justify-center gap-3">
-            <BookPlus className="h-8 w-8 text-primary-600" />
-            Sell a Book
+            <Edit className="h-8 w-8 text-primary-600" />
+            Edit Listing
           </h1>
           <p className="mt-2 text-lg text-slate-600">
-            List your second-hand book and find it a new home.
+            Update the details for your listed book.
           </p>
         </div>
 
@@ -171,9 +218,9 @@ export default function AddBook() {
               </div>
 
               <div className="pt-4">
-                <button type="submit" disabled={loading} className="w-full py-3 px-4 border border-transparent rounded-lg shadow-lg shadow-primary-600/30 text-base font-semibold text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all disabled:opacity-70 disabled:cursor-not-allowed hover:-translate-y-0.5 flex justify-center items-center gap-2">
-                  <BookPlus className="h-5 w-5" />
-                  {loading ? 'Publishing Listing...' : 'Publish Listing'}
+                <button type="submit" disabled={saving} className="w-full py-3 px-4 border border-transparent rounded-lg shadow-lg shadow-primary-600/30 text-base font-semibold text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all disabled:opacity-70 disabled:cursor-not-allowed hover:-translate-y-0.5 flex justify-center items-center gap-2">
+                  <Edit className="h-5 w-5" />
+                  {saving ? 'Updating Listing...' : 'Update Listing'}
                 </button>
               </div>
             </form>
