@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import BookCard from '../components/BookCard';
 import { bookAPI } from '../services/api';
 import { useCart } from '../context/CartContext';
-import { ArrowRight, BookOpen, Star, Mail } from 'lucide-react';
+import { useWishlist } from '../context/WishlistContext';
+import { ArrowRight, BookOpen, Star, Search } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function Home() {
@@ -12,18 +14,23 @@ export default function Home() {
   const [category, setCategory] = useState(() => localStorage.getItem('homeCategory') || '');
   const [categories, setCategories] = useState([]);
   const { addToCart } = useCart();
+  const { toggleWishlist, isWishlisted } = useWishlist();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
     fetchBooks();
     fetchCategories();
     localStorage.setItem('homeCategory', category);
-  }, [category]);
+  }, [category, searchQuery]);
 
   const fetchBooks = async () => {
     try {
       setLoading(true);
       setError(null);
-      const filters = category ? { category } : {};
+      const filters = {};
+      if (category) filters.category = category;
+      if (searchQuery) filters.search = searchQuery;
       const response = await bookAPI.getAll(1, 20, filters);
       setBooks(response.data || []);
     } catch (err) {
@@ -48,15 +55,16 @@ export default function Home() {
       await addToCart(bookId, 1);
       toast.success('Book added to cart!');
     } catch (err) {
-      toast.error('Failed to add to cart.');
+      toast.error('Please log in to add to cart.');
     }
   };
 
-  const handleWishlist = (bookId) => {
-    toast.success('Added to wishlist!');
+  const handleWishlist = (book) => {
+    toggleWishlist(book);
   };
 
   const featuredBooks = books.slice(0, 4);
+
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -124,8 +132,9 @@ export default function Home() {
                 title={book.title}
                 author={book.author}
                 originalPrice={book.price}
+                isWishlisted={isWishlisted(book._id)}
                 onAddToCart={() => handleAddToCart(book._id)}
-                onAddToWishlist={() => handleWishlist(book._id)}
+                onAddToWishlist={() => handleWishlist(book)}
               />
             ))}
           </div>
@@ -135,7 +144,17 @@ export default function Home() {
       {/* Categories & All Books Section */}
       <section id="all-books" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Explore Our Collection</h2>
+          {searchQuery ? (
+            <>
+              <h2 className="text-3xl font-bold text-slate-900 mb-2">Search Results</h2>
+              <p className="text-slate-500 flex items-center justify-center gap-2">
+                <Search className="h-4 w-4" />
+                Showing results for <strong>&ldquo;{searchQuery}&rdquo;</strong> &mdash; {books.length} found
+              </p>
+            </>
+          ) : (
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Explore Our Collection</h2>
+          )}
           
           {categories.length > 0 && (
             <div className="flex flex-wrap justify-center gap-2 mt-8">
@@ -188,8 +207,9 @@ export default function Home() {
                 title={book.title}
                 author={book.author}
                 originalPrice={book.price}
+                isWishlisted={isWishlisted(book._id)}
                 onAddToCart={() => handleAddToCart(book._id)}
-                onAddToWishlist={() => handleWishlist(book._id)}
+                onAddToWishlist={() => handleWishlist(book)}
               />
             ))}
           </div>

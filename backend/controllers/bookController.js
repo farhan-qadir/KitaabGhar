@@ -2,7 +2,7 @@ import { Book } from '../models/Book.js';
 import { isMongoConnected } from '../config/database.js';
 
 // Demo data for when MongoDB is not connected
-const demoBooks = [
+export const demoBooks = [
   {
     _id: "demo1",
     title: "The Great Gatsby",

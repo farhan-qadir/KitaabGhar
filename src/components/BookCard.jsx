@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Heart, ShoppingCart, Star } from 'lucide-react';
 
 export default function BookCard({
@@ -7,13 +7,17 @@ export default function BookCard({
   title,
   author,
   originalPrice,
+  isWishlisted = false,
   onAddToCart,
   onAddToWishlist
 }) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [localWishlisted, setLocalWishlisted] = useState(isWishlisted);
+
+  // keep in sync when prop changes (e.g. navigating back)
+  useEffect(() => { setLocalWishlisted(isWishlisted); }, [isWishlisted]);
 
   const handleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
+    setLocalWishlisted(prev => !prev);
     if (onAddToWishlist) onAddToWishlist();
   };
 
@@ -44,7 +48,7 @@ export default function BookCard({
           onClick={handleWishlist}
           className="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm text-slate-400 hover:text-red-500 shadow-sm transition-colors z-10"
         >
-          <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
+          <Heart className={`h-5 w-5 ${localWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
         </button>
       </div>
 
