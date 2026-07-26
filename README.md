@@ -1,169 +1,314 @@
-# KitaabGhar
+# 📚 Kitaab Ghar
 
-## Project Description
+## Buy & Sell Books with Ease
 
-KitaabGhar is a web-based platform for buying and selling old books. The application allows users to browse available books, add books to a shopping cart, and upload books they wish to sell. The platform provides an easy and affordable way for students and readers to access second-hand books while promoting book reuse and sustainability.
+**Kitaab Ghar** is a Customer-to-Customer (C2C) online marketplace that enables students and book lovers to buy and sell new or used books directly with one another. The platform reduces the cost of purchasing books, encourages the reuse of educational resources, and provides a simple way for users to list, discover, and purchase books online.
+
+## 🎯 Problem Statement
+
+Students often purchase expensive textbooks that they no longer need after completing a semester. At the same time, other students struggle to find affordable books. Existing marketplaces are either too general, difficult to navigate for books, or lack features specifically designed for students.
+
+**Kitaab Ghar** solves this problem by providing a dedicated platform where users can:
+
+* Buy affordable used and new books.
+* Sell books they no longer need.
+* Search books easily using filters.
+* Connect directly with sellers.
+
+**Target Users**
+
+* University students
+* School students
+* Teachers
+* Book collectors
+* General readers
 
 ---
 
-## Features
+# 🌐 Live Demo
 
-* User Authentication (Login/Logout)
-* Browse Available Books
-* Search Books by Title or Author
-* Add Books to Cart
-* Sell/Upload Books
-* View Book Details
-* Update Book Information
-* Delete Book Listings
-* Responsive User Interface
-* MongoDB Database Integration
-* RESTful API Communication
+**Live Website:** https://your-vercel-link.vercel.app
 
 ---
 
-## Technologies Used
+# ✨ Features
 
-### Frontend
+### User Authentication
+
+* User registration
+* Secure login/logout
+* JWT authentication
+* Protected routes
+
+### Book Management
+
+* Add new books
+* Upload book images
+* Edit book details
+* Delete books
+* View complete book information
+
+### Book Marketplace
+
+* Browse all available books
+* Search books by title
+* Filter books by category
+* Filter by condition
+* View seller information
+* Responsive book listings
+
+### Shopping Cart
+
+* Add books to cart
+* Update quantity
+* Remove books from cart
+* View order summary
+
+### Checkout
+
+* Delivery information
+* Order summary
+* Multiple payment method selection
+* Place order
+
+### User Dashboard
+
+* Manage listed books
+* View personal listings
+* Edit profile
+
+### Responsive Design
+
+* Desktop compatible
+* Tablet friendly
+* Mobile responsive
+
+---
+
+# 🤖 AI-Powered Feature
+
+## AI Book Description & Recommendation Assistant
+
+Kitaab Ghar includes an AI-powered assistant that helps users create professional book listings and improve the buying experience.
+
+### What the AI Does
+
+* Generates attractive book descriptions.
+* Creates SEO-friendly listing titles.
+* Suggests the appropriate book category.
+* Identifies the likely condition of a book based on user input.
+* Recommends similar books based on title or category.
+* Improves incomplete or poorly written descriptions.
+
+### Example System Prompt
+
+```
+You are an AI assistant for Kitaab Ghar, a C2C book marketplace.
+
+Your job is to help users create professional book listings.
+
+Instructions:
+- Generate clear and attractive book descriptions.
+- Keep descriptions concise.
+- Suggest the best category.
+- Recommend keywords for better search.
+- Mention the condition naturally.
+- Never generate misleading information.
+- Respond in a friendly and professional tone.
+```
+
+---
+
+# 🛠 Technologies Used
+
+## Frontend
 
 * React.js
 * React Router
-* Tailwind CSS
-* Vite
+* HTML5
+* CSS3
+* JavaScript (ES6)
 
-### Backend
+## Backend
 
 * Node.js
 * Express.js
 
-### Database
+## Database
 
-* MongoDB Atlas
+* MongoDB
 * Mongoose
 
-### Other Tools
-* Git & GitHub
+## Authentication
+
+* JSON Web Token (JWT)
+* bcrypt.js
+
+## File Upload
+
+* Multer
+
+## AI
+
+* OpenAI API (or your chosen AI model/provider)
+
+## Deployment
+
+* Vercel (Frontend)
+* Render/Railway (Backend)
+* MongoDB Atlas
+
+## Version Control
+
+* Git
+* GitHub
 
 ---
 
-# Frontend Setup Instructions
+# 📸 Screenshots
 
-### Navigate to Frontend Folder
+Add at least three screenshots.
+
+### Home Page
+
+*(Insert Screenshot)*
+
+---
+
+### Book Details
+
+*(Insert Screenshot)*
+
+---
+
+### Shopping Cart
+
+*(Insert Screenshot)*
+
+---
+
+### Checkout Page
+
+*(Insert Screenshot)*
+
+---
+
+### User Dashboard
+
+*(Insert Screenshot)*
+
+---
+
+# 🚀 Installation
+
+## Clone the Repository
 
 ```bash
-cd frontend
+git clone https://github.com/yourusername/kitaabghar.git
 ```
 
-### Install Dependencies
+Move into the project directory:
+
+```bash
+cd kitaabghar
+```
+
+Install frontend dependencies:
 
 ```bash
 npm install
 ```
 
-### Start Frontend Server
+Install backend dependencies:
+
+```bash
+cd server
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5000
+
+MONGODB_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
+
+OPENAI_API_KEY=your_api_key
+
+NODE_ENV=development
+```
+
+Run the backend:
 
 ```bash
 npm run dev
 ```
 
-Frontend will run on:
-
-```text
-http://localhost:5173
-```
-
----
-
-# Backend Setup Instructions
-
-### Navigate to Backend Folder
+Run the frontend:
 
 ```bash
-cd backend
-```
-
-### Install Dependencies
-
-```bash
-npm install
-```
-
-## Step 2: Navigate to Project
-
-```bash
-cd KitaabGhar
-```
-
-## Step 3: Start Backend
-
-```bash
-cd backend
-npm install
 npm start
 ```
 
-## Step 4: Start Frontend
+Open your browser:
 
-Open a new terminal:
-
-```bash
-npm install
-npm run dev
 ```
-
-# API Overview
-
-The backend provides REST APIs for:
-
-* User Authentication
-* Book Management
-* Cart Operations
-* CRUD Operations
-
-### CRUD Operations
-
-#### Create
-
-Add a new book.
-
-#### Read
-
-Fetch all books from the database.
-
-#### Update
-
-Modify existing book information.
-
-#### Delete
-
-Remove a book from the database.
+http://localhost:3000
+```
 
 ---
 
-# Project Structure
+# 📂 Project Structure
 
-```text
-KitaabGhar/
+```
+KitaabGhar
 │
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   └── package.json
+├── client
+│   ├── components
+│   ├── pages
+│   ├── assets
+│   └── App.js
 │
-├── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── config/
-│   └── package.json
+├── server
+│   ├── controllers
+│   ├── routes
+│   ├── models
+│   ├── middleware
+│   └── server.js
 │
-├── README.md
-└── .gitignore
+├── public
+├── package.json
+└── README.md
 ```
 
-# Author
+---
 
-**Farhan Qadir**
-**023-22-0082**
-BS Computer Science
+# 🔮 Future Enhancements
+
+* AI-powered price estimation
+* AI chatbot for customer support
+* Wishlist functionality
+* Book exchange system
+* Order tracking
+* Online payment gateway integration
+* Seller ratings and reviews
+* Recommendation system using machine learning
+* Mobile application
+
+---
+
+# 👨‍💻 Author
+
+**Farhan Qadir Abdul Qadir**
+
+Computer Science Graduate
+
+GitHub: https://github.com/farhan-qadir
+
+---
+
+# 📄 License
+
+This project was developed for educational purposes as a university final project. It is open for learning and demonstration.
